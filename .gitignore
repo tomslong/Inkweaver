@@ -57,7 +57,7 @@ logs/
 *.sqlite3
 *.db
 
-# IDE
+## IDE
 .idea/
 .vscode/
 *.suo
@@ -65,3 +65,88 @@ logs/
 *.njsproj
 *.sln
 *.sw?
+
+# AI Development - Frameworks
+# TensorFlow
+.tfevents*
+.tensorboard/
+*.tfrecord
+*.tfr
+
+# PyTorch (exclude trained models that should be tracked)
+*.pt
+*.pth
+*.pkl
+
+# JAX
+.jax_cache/
+
+# Hugging Face
+.huggingface/
+.transformers/
+.cache/huggingface/
+
+# AI Development - Training
+checkpoints/
+checkpoint/
+*.ckpt
+*.ckpt.index
+*.ckpt.data-*
+
+# AI Development - Experiment Tracking
+mlruns/
+wandb/
+.comet/
+.neptune/
+
+# AI Development - Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# AI Development - Code Generation & LSP
+.codegpt/
+.codium/
+.tabnine/
+.codeium/
+.copilot/
+
+# AI Development - Vector Databases
+chroma/
+qdrant/
+pinecone/
+weaviate/
+
+# AI Development - Feature Stores
+.feature_store/
+feast/
+
+# AI Development - AutoML
+.auto_ml/
+auto-sklearn/
+
+# AI Development - GPU & Hardware
+.nv/
+.cuda_cache/
+.cudnn/
+
+# AI Development - Cloud Services
+.aws/
+.gcloud/
+.azure/
+
+# AI Development - Containerization
+.dockerignore
+.docker/
+.kubernetes/
+.helm/
+
+# AI Development - Logs & Metrics
+.metrics/
+.monitoring/
+
+# AI Development - Misc
+*.onnx
+*.onnx.proto
+*.pb
+*.pbtxt
+
