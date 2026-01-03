@@ -5,7 +5,7 @@ AI-driven novel writing platform with cascading outline generation and multi-age
 ## Features
 
 - **Cascading Outline Generation**: 
-  - Volume Planning: Define conflicts and大结局
+  - Volume Planning: Define conflicts and the end
   - Chapter Generation: Batch generate 20-30 chapter summaries
   - Beat Refinement: Refine into 3-5 beats per chapter
 
