@@ -1,0 +1,74 @@
+version: '3.9'
+
+services:
+  db:
+    image: ankane/pgvector:latest
+    container_name: inkweaver-db
+    environment:
+      POSTGRES_DB: inkweaver
+      POSTGRES_USER: inkweaver_user
+      POSTGRES_PASSWORD: inkweaver_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inkweaver_user -d inkweaver"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: inkweaver-backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://inkweaver_user:inkweaver_password@db:5432/inkweaver
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key}
+      CLAUDE_API_KEY: ${CLAUDE_API_KEY:-your-claude-api-key}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-your-deepseek-api-key}
+    volumes:
+      - ./app:/app/app
+      - ./alembic:/app/alembic
+      - ./alembic.ini:/app/alembic.ini
+      - ./pyproject.toml:/app/pyproject.toml
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:latest
+    container_name: inkweaver-adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./inkweaver-frontend
+      dockerfile: Dockerfile
+    container_name: inkweaver-frontend
+    environment:
+      NODE_ENV: production
+      API_BASE_URL: http://backend:8000
+      NEXT_PUBLIC_API_BASE_URL: http://backend:8000
+    volumes:
+      - ./inkweaver-frontend:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local

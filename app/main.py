@@ -2,17 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.v1.router import api_router
-from app.db.session import engine
-from app.db.base import Base
-from app.db.vector import init_vector_extension
-from app.db.session import SessionLocal
-
-# Create all database tables
-Base.metadata.create_all(bind=engine)
-
-# Initialize vector extension
-with SessionLocal() as db:
-    init_vector_extension(db)
 
 # Create FastAPI app
 app = FastAPI(

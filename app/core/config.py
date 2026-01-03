@@ -6,13 +6,13 @@ from pydantic import PostgresDsn, validator
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Inkweaver Backend"
     API_V1_STR: str = "/api/v1"
-    SECRET_KEY: str
+    SECRET_KEY: str = "your-secret-key"
     
     # Database settings
-    POSTGRES_SERVER: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
+    POSTGRES_SERVER: str = "db"
+    POSTGRES_USER: str = "inkweaver_user"
+    POSTGRES_PASSWORD: str = "inkweaver_password"
+    POSTGRES_DB: str = "inkweaver"
     DATABASE_URL: Optional[PostgresDsn] = None
     
     @validator("DATABASE_URL", pre=True)
@@ -28,8 +28,8 @@ class Settings(BaseSettings):
         )
     
     # AI Model settings
-    CLAUDE_API_KEY: str
-    DEEPSEEK_API_KEY: str
+    CLAUDE_API_KEY: str = "your-claude-api-key"
+    DEEPSEEK_API_KEY: str = "your-deepseek-api-key"
     
     # Vector database settings
     VECTOR_DIMENSIONS: int = 1536
